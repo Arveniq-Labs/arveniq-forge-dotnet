@@ -18,8 +18,8 @@ public sealed record AuditPolicy(
     internal JsonObject ToJson() => new()
     {
         ["audit_on_call"] = AuditOnCall, ["audit_input_metadata"] = AuditInputMetadata,
-        ["audit_output_metadata"] = AuditOutputMetadata, ["redact_input_fields"] = JsonArray.Create(RedactInputFields.ToArray()),
-        ["redact_output_fields"] = JsonArray.Create(RedactOutputFields.ToArray()), ["trace_visibility"] = TraceVisibility.ToWire(),
+        ["audit_output_metadata"] = AuditOutputMetadata, ["redact_input_fields"] = ForgeManifestJson.StringArray(RedactInputFields),
+        ["redact_output_fields"] = ForgeManifestJson.StringArray(RedactOutputFields), ["trace_visibility"] = TraceVisibility.ToWire(),
         ["retention_policy_id"] = RetentionPolicyId,
     };
 }
@@ -32,8 +32,8 @@ public sealed record ToolPackageHandlerManifest(
     internal JsonObject ToJson() => new()
     {
         ["handler_ref"] = HandlerRef, ["slug"] = Slug, ["name"] = Name, ["description"] = Description ?? string.Empty,
-        ["execution_mode"] = ExecutionMode.ToWire(), ["risk_level"] = RiskLevel.ToWire(), ["required_scopes"] = JsonArray.Create(RequiredScopes.ToArray()),
-        ["supported_environments"] = JsonArray.Create(SupportedEnvironments.Select(environment => environment.ToWire()).ToArray()),
+        ["execution_mode"] = ExecutionMode.ToWire(), ["risk_level"] = RiskLevel.ToWire(), ["required_scopes"] = ForgeManifestJson.StringArray(RequiredScopes),
+        ["supported_environments"] = ForgeManifestJson.StringArray(SupportedEnvironments.Select(environment => environment.ToWire())),
         ["approval_requirement"] = ApprovalRequirement.ToWire(), ["input_schema"] = InputSchema.DeepClone(),
         ["output_schema"] = OutputSchema.DeepClone(), ["audit_policy"] = AuditPolicy.ToJson(),
     };
@@ -135,7 +135,8 @@ public static class ForgeManifests
             }
             if (slug is not null && !slugs.Add(slug)) Error(errors, path + ".slug", "Handler slug must be unique.");
             if (!StringArray(handler["required_scopes"], false)) Error(errors, path + ".required_scopes", "Required scopes must be explicit.");
-            if (handler["supported_environments"] is not JsonArray environments || environments.Count == 0) Error(errors, path + ".supported_environments", "At least one supported environment is required.");
+            var environments = handler["supported_environments"] as JsonArray;
+            if (environments is null || environments.Count == 0) Error(errors, path + ".supported_environments", "At least one supported environment is required.");
             else if (environments.Any(environment => environment is not JsonValue || !new[] { "DEVELOPMENT", "STAGING", "PRODUCTION" }.Contains(Text(environment)))) Error(errors, path + ".supported_environments", "Supported environments must be valid Forge environments.");
             var execution = Text(handler["execution_mode"]); var risk = Text(handler["risk_level"]); var approval = Text(handler["approval_requirement"]);
             if (!new[] { "read_only", "write", "external_action" }.Contains(execution)) Error(errors, path + ".execution_mode", "Execution mode is invalid.");
@@ -143,7 +144,7 @@ public static class ForgeManifests
             if (!new[] { "none", "always", "policy_based", "high_risk_only" }.Contains(approval)) Error(errors, path + ".approval_requirement", "Approval requirement is invalid.");
             if (!Schema(handler["input_schema"])) Error(errors, path + ".input_schema", "Input schema must be a JSON schema object.");
             if (!Schema(handler["output_schema"])) Error(errors, path + ".output_schema", "Output schema must be a JSON schema object.");
-            if (execution == "external_action" && environments?.Any(environment => Text(environment) == "PRODUCTION") == true && approval == "none") Error(errors, path + ".approval_requirement", "Production external_action handlers require approval policy.");
+            if (execution == "external_action" && environments is not null && environments.Any(environment => Text(environment) == "PRODUCTION") && approval == "none") Error(errors, path + ".approval_requirement", "Production external_action handlers require approval policy.");
             if (risk is "high" or "restricted" && approval == "none") Error(errors, path + ".approval_requirement", "High/restricted risk handlers require approval policy.");
             ValidateAudit(handler["audit_policy"], path + ".audit_policy", errors);
         }
@@ -182,4 +183,14 @@ internal static class ForgeManifestWireValues
     internal static string ToWire(this ApprovalRequirement value) => value switch { ApprovalRequirement.None => "none", ApprovalRequirement.Always => "always", ApprovalRequirement.PolicyBased => "policy_based", _ => "high_risk_only" };
     internal static string ToWire(this TraceVisibility value) => value switch { TraceVisibility.Summary => "summary", TraceVisibility.Metadata => "metadata", _ => "full_safe" };
     internal static string ToWire(this ToolPackageRuntimeType value) => value switch { ToolPackageRuntimeType.Node => "node", ToolPackageRuntimeType.Container => "container", ToolPackageRuntimeType.Serverless => "serverless", ToolPackageRuntimeType.Mcp => "mcp", _ => "internal" };
+}
+
+internal static class ForgeManifestJson
+{
+    internal static JsonArray StringArray(IEnumerable<string> values)
+    {
+        var array = new JsonArray();
+        foreach (var value in values) array.Add(value);
+        return array;
+    }
 }
