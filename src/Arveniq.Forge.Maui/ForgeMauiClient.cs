@@ -59,7 +59,7 @@ public sealed class ForgeMauiClient(IMobileGatewayCredentialProvider credentials
 {
     public async ValueTask<ForgeMobileSession> CreateSessionAsync(CancellationToken cancellationToken = default)
     {
-        var response = await ExecuteAsync("POST", "/mobile/sessions", [], cancellationToken).ConfigureAwait(false);
+        var response = await ExecuteAsync("POST", "/mobile/sessions", new Dictionary<string, object?>(), cancellationToken).ConfigureAwait(false);
         return new ForgeMobileSession(RequiredString(response, "id"), RequiredString(response, "expiresAt"));
     }
 
@@ -106,7 +106,7 @@ public sealed class ForgeMauiClient(IMobileGatewayCredentialProvider credentials
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(conversationId);
         ArgumentException.ThrowIfNullOrWhiteSpace(turnId);
-        _ = await ExecuteAsync("POST", $"/conversations/{Uri.EscapeDataString(conversationId)}/turns/{Uri.EscapeDataString(turnId)}:cancel", [], cancellationToken).ConfigureAwait(false);
+        _ = await ExecuteAsync("POST", $"/conversations/{Uri.EscapeDataString(conversationId)}/turns/{Uri.EscapeDataString(turnId)}:cancel", new Dictionary<string, object?>(), cancellationToken).ConfigureAwait(false);
     }
 
     private async ValueTask<MobileGatewayResponse> ExecuteAsync(string method, string path, IReadOnlyDictionary<string, object?> body, CancellationToken cancellationToken)
