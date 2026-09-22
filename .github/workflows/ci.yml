@@ -16,3 +16,4 @@ jobs:
       - run: dotnet restore Arveniq.Forge.sln
       - run: dotnet build Arveniq.Forge.sln --configuration Release --no-restore
       - run: dotnet run --project tests/Arveniq.Forge.ContractTests --configuration Release --no-build
+      - run: dotnet run --project tests/Arveniq.Forge.Maui.ContractTests --configuration Release --no-build

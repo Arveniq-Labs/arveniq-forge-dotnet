@@ -11,6 +11,12 @@ It is the .NET counterpart to the TypeScript and Java SDKs:
 
 The library depends only on the .NET 8 base class library.
 
+## MAUI mobile integration
+
+`Arveniq.Forge.Maui` is a separate, mobile-safe .NET 8 library for MAUI apps. It deliberately does not reference `ForgeDeveloperClient`, accept a Forge API key, or accept authoritative account, tenant, portfolio, or similar resource identifiers.
+
+Implement `IMauiSecureTokenStore` with MAUI `SecureStorage`, obtain a short-lived gateway token and opaque `ForgeMobileContextAssertion` from your trusted backend, then inject the application's approved HTTP/SSE `IMobileGatewayTransport`. The mobile gateway validates authorization and resolves context server-side. The package also includes a lifecycle coordinator, upload preparation, and push-token registration.
+
 ## Install
 
 ```xml

@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../src/Arveniq.Forge.Maui/Arveniq.Forge.Maui.csproj" />
+  </ItemGroup>
+  <PropertyGroup><OutputType>Exe</OutputType></PropertyGroup>
+</Project>

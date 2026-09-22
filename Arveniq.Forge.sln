@@ -4,9 +4,13 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arveniq.Forge", "src\Arveniq.Forge\Arveniq.Forge.csproj", "{AC381DC7-1CD3-4F63-81A6-114D286E2D1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arveniq.Forge.Maui", "src\Arveniq.Forge.Maui\Arveniq.Forge.Maui.csproj", "{C29F8BA1-6EBF-4C65-9C28-99A34D3921CC}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arveniq.Forge.Tool", "src\Arveniq.Forge.Tool\Arveniq.Forge.Tool.csproj", "{7B66EBD0-2C25-4C7E-AECC-2933BB4CDEF9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arveniq.Forge.ContractTests", "tests\Arveniq.Forge.ContractTests\Arveniq.Forge.ContractTests.csproj", "{237E4B8E-3D92-44F2-890A-40222EF00B4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arveniq.Forge.Maui.ContractTests", "tests\Arveniq.Forge.Maui.ContractTests\Arveniq.Forge.Maui.ContractTests.csproj", "{611AD101-3865-45CB-9E3D-E659B71CF053}"
 EndProject
 Global
   GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +22,10 @@ Global
     {AC381DC7-1CD3-4F63-81A6-114D286E2D1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
     {AC381DC7-1CD3-4F63-81A6-114D286E2D1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
     {AC381DC7-1CD3-4F63-81A6-114D286E2D1A}.Release|Any CPU.Build.0 = Release|Any CPU
+    {C29F8BA1-6EBF-4C65-9C28-99A34D3921CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+    {C29F8BA1-6EBF-4C65-9C28-99A34D3921CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+    {C29F8BA1-6EBF-4C65-9C28-99A34D3921CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+    {C29F8BA1-6EBF-4C65-9C28-99A34D3921CC}.Release|Any CPU.Build.0 = Release|Any CPU
     {7B66EBD0-2C25-4C7E-AECC-2933BB4CDEF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
     {7B66EBD0-2C25-4C7E-AECC-2933BB4CDEF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
     {7B66EBD0-2C25-4C7E-AECC-2933BB4CDEF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -26,5 +34,9 @@ Global
     {237E4B8E-3D92-44F2-890A-40222EF00B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
     {237E4B8E-3D92-44F2-890A-40222EF00B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
     {237E4B8E-3D92-44F2-890A-40222EF00B4A}.Release|Any CPU.Build.0 = Release|Any CPU
+    {611AD101-3865-45CB-9E3D-E659B71CF053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+    {611AD101-3865-45CB-9E3D-E659B71CF053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+    {611AD101-3865-45CB-9E3D-E659B71CF053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+    {611AD101-3865-45CB-9E3D-E659B71CF053}.Release|Any CPU.Build.0 = Release|Any CPU
   EndGlobalSection
 EndGlobal

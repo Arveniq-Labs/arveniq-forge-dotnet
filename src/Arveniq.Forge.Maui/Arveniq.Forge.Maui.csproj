@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Arveniq.Forge.Maui</AssemblyName>
+    <RootNamespace>Arveniq.Forge.Maui</RootNamespace>
+    <PackageId>Arveniq.Forge.Maui</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Arveniq Labs</Authors>
+    <Description>Mobile-safe .NET MAUI integration client for the Arveniq Forge mobile gateway.</Description>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/Arveniq-Labs/arveniq-forge-dotnet</RepositoryUrl>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+</Project>
